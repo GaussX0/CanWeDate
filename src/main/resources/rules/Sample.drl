@@ -36,17 +36,6 @@ function String input(String question, String[] options){
 	return answer;
 }
 
-query "getObjectsOfClassA"
-    $result: Fact()
-end
-
-rule "Test"
-	when
-		not Fact(title == "Initialised2")
-	then
-		System.out.println("Success");
-end
-
 rule "Init"
     when
     then
