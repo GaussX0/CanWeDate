@@ -1,11 +1,11 @@
 #Fri Dec 22 22:46:47 CET 2023
 \!/=
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
-/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.targetPlatform=16
-/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.compliance=16
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.targetPlatform=11
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.compliance=11
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.release=enabled
-/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.source=16
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.source=11
 @org.eclipse.jdt.core=3.27.0.v20210823-1758
 file_export_version=3.0
