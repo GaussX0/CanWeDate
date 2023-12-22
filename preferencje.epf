@@ -1,0 +1,15 @@
+#Fri Dec 22 22:43:57 CET 2023
+\!/=
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.targetPlatform=16
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.compliance=16
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.release=enabled
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.source=16
+/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1702818568055" defaultVMConnector\="">\r\n    <vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\r\n        <vm id\="1700860527830" name\="jre" path\="C\:\\Users\\Kamil\\.p2\\pool\\plugins\\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.1.v20231028-0937\\jre"/>\r\n        <vm id\="1702818568055" name\="jdk-11" path\="C\:\\Program Files\\Java\\jdk-11"/>\r\n    </vmType>\r\n</vmSettings>\r\n
+/instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.formatterprofiles.version=21
+@org.eclipse.jdt.core=3.27.0.v20210823-1758
+@org.eclipse.jdt.launching=3.19.300.v20210815-1119
+@org.eclipse.jdt.ui=3.24.0.v20210823-0647
+file_export_version=3.0
