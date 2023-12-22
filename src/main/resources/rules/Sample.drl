@@ -1,0 +1,925 @@
+package com.sample
+
+import com.sample.CanWeDate;
+import com.sample.CanWeDateUI;
+
+declare Fact
+	title: String
+	answer: String
+end
+
+function String input(String question, String[] options){
+	CanWeDateUI $UI = new CanWeDateUI(question, options);
+	while($UI.answer == null){System.out.print("");}; //bez tego printa program się psuje???
+	String answer = $UI.answer;
+	return answer;
+}
+
+query "getObjectsOfClassA"
+    $result: Fact()
+end
+
+rule "Test"
+	when
+		not Fact(title == "Initialised2")
+	then
+		System.out.println("Success");
+end
+
+rule "Init"
+    when
+    then
+    	String[] options = new String[]{"Professional", "Personal", "Other"};
+    	String answer = input("What kind of preexisting relationship do you have with this person?", options);
+		insert(new Fact("Type", answer));
+end
+
+
+rule "Professional"
+	when
+		f: Fact(title == "Type" && answer == "Professional")
+	then
+		String[] options = new String[]{"It's my costar", 
+											"It's my stalker",
+											"It's my therapist",
+											"It's my social worker",
+											"It's my landlord",
+											"It's my physician",
+											"It's my boss/coworker",
+											"It's my professor",
+											"It's my student",
+											"It's my teacher"};
+		String answer = input("Who is it?", options);
+		insert(new Fact("Who is it?", answer));
+end
+
+rule "Costar"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my costar")
+	then
+		String[] options = new String[]{"Yes", "No"};
+		String answer = input("Are you just trying to generate publicity and dispel certain rumors?", options);
+		insert(new Fact("Are you just trying to generate publicity and dispel certain rumors?", answer));
+end
+
+rule "CostarYes"
+    when
+        f: Fact(title == "Are you just trying to generate publicity and dispel certain rumors?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "Hi, Robert Pattinson."));
+        String answer = input("Hi, Robert Pattinson.", new String[]{});
+end
+
+rule "CostarNo"
+    when
+        f: Fact(title == "Are you just trying to generate publicity and dispel certain rumors?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Not advised, but we'll allow it if you make a sex tape."));
+        String answer = input("Not advised, but we'll allow it if you make a sex tape.", new String[]{});
+end
+
+rule "Stalker"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my stalker")
+    then
+        String[] options = new String[]{"Yes", "No"};
+		String answer = input("Is there a restraining order involved?", options);
+		insert(new Fact("Is there a restraining order involved?", answer));
+end
+
+rule "StalkerYes"
+    when
+        f: Fact(title == "Is there a restraining order involved?" && answer == "Yes")
+    then
+        String[] options = new String[]{"Never", "Today"};
+        String answer = input("When are you gonna realize that I'm the only one who's ever gonna love you?!", options);
+        insert(new Fact("When are you gonna realize that I'm the only one who's ever gonna love you?!", answer));
+end
+
+rule "StalkerYesToday"
+    when
+        f: Fact(title == "When are you gonna realize that I'm the only one who's ever gonna love you?!" && answer == "Today")
+    then
+        insert(new Fact("Conclusion", "SEX THEM!!!"));
+        String answer = input("SEX THEM!!!", new String[]{});
+end
+
+rule "StalkerYesNever"
+    when
+        f: Fact(title == "When are you gonna realize that I'm the only one who's ever gonna love you?!" && answer == "Never")
+    then
+        insert(new Fact("Conclusion", "Probably better not"));
+        String answer = input("Probably better not", new String[]{});
+end
+
+rule "StalkerNo"
+    when
+        f: Fact(title == "Is there a restraining order involved?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Probably better not"));
+        String answer = input("Probably better not", new String[]{});
+end
+
+rule "Therapist"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my therapist")
+    then
+        String[] options = new String[]{"I don't think so", "Maybe a little"};
+        String answer = input("ARE YOU CRAZY?", options);
+        insert(new Fact("ARE YOU CRAZY?", answer));
+end
+
+rule "TherapistCrazy"
+    when
+        f: Fact(title == "ARE YOU CRAZY?" && answer == "I don't think so")
+    then
+        insert(new Fact("Conclusion", "SEX THEM!!!"));
+        String answer = input("SEX THEM!!!", new String[]{});
+end
+
+rule "TherapistLazy"
+    when
+        f: Fact(title == "ARE YOU CRAZY?" && answer == "Maybe a little")
+    then
+        insert(new Fact("Conclusion", "Probably better not"));
+        String answer = input("Probably better not", new String[]{});
+end
+
+rule "SocialWorker"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my social worker")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Is this just an attempt to get your kids back?", options);
+        insert(new Fact("Is this just an attempt to get your kids back?", answer));
+end
+
+rule "SocialWorkerYes"
+    when
+        f: Fact(title == "Is this just an attempt to get your kids back?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "Do whatever it takes"));
+        String answer = input("Do whatever it takes", new String[]{});
+end
+
+rule "SocialWorkerNo"
+    when
+        f: Fact(title == "Is this just an attempt to get your kids back?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Probably better not"));
+        String answer = input("Probably better not", new String[]{});
+end
+
+rule "Landlord"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my landlord")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Do you live in either New York or San Francisco?", options);
+        insert(new Fact("Do you live in either New York or San Francisco?", answer));
+end
+
+rule "LandlordYes"
+    when
+        f: Fact(title == "Do you live in either New York or San Francisco?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "Do whatever it takes"));
+        String answer = input("Do whatever it takes", new String[]{});
+end
+
+rule "LandlordNo"
+    when
+        f: Fact(title == "Do you live in either New York or San Francisco?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Probably better not"));
+        String answer = input("Probably better not", new String[]{});
+end
+
+rule "Physician"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my physician")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Is your health at any serious risk?", options);
+        insert(new Fact("Is your health at any serious risk?", answer));
+end
+
+rule "PhysicianYes"
+    when
+        f: Fact(title == "Is your health at any serious risk?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "Probably better not"));
+        String answer = input("Probably better not", new String[]{});
+end
+
+rule "PhysicianNo"
+    when
+        f: Fact(title == "Is your health at any serious risk?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "SEX THEM!!!"));
+        String answer = input("SEX THEM!!!", new String[]{});
+end
+
+rule "Boss/Coworker"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my boss/coworker")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Does your job suck?", options);
+        insert(new Fact("Does your job suck?", answer));
+end
+
+rule "Boss/CoworkerYes"
+    when
+        f: Fact(title == "Does your job suck?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "SEX THEM!!!"));
+        String answer = input("SEX THEM!!!", new String[]{});
+end
+
+rule "Boss/CoworkerNo / StudentCollege"
+    when
+        f: Fact(title == "Does your job suck?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Probably better not"));
+        String answer = input("Probably better not", new String[]{});
+end
+
+rule "Professor"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my professor")
+    then
+        insert(new Fact("Conclusion", "SEX THEM!!!"));
+        String answer = input("SEX THEM!!!", new String[]{});
+end
+
+rule "Student"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my student")
+    then
+        String[] options = new String[]{"College", "Anything below college"};
+        String answer = input("Where do you teach?", options);
+        insert(new Fact("Where do you teach?", answer));
+end
+
+rule "StudentCollege"
+    when
+        f: Fact(title == "Where do you teach?" && answer == "College")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Does your job suck?", options);
+        insert(new Fact("Does your job suck?", answer));
+end
+
+rule "StudentBelowCollege"
+    when
+        f: Fact(title == "Where do you teach?" && answer == "Anything below college")
+    then
+        String[] options = new String[]{"Yeah", "No, of course not"};
+        String answer = input("Whoa. You're talking about having sex with a minor, right?", options);
+        insert(new Fact("Whoa. You're talking about having sex with a minor, right?", answer));
+end
+
+rule "StudentBelowCollegeYes/No"
+    when
+        f: Fact(title == "Whoa. You're talking about having sex with a minor, right?")
+    then
+        insert(new Fact("Conclusion", "THOUGHT-CRIME! Out agents have been sent to your location. Resistance is useless."));
+        String answer = input("THOUGHT-CRIME! Out agents have been sent to your location. Resistance is useless.", new String[]{});
+end
+
+rule "Teacher"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my teacher")
+    then
+        insert(new Fact("Conclusion", "Absolutely not!!!"));
+        String answer = input("Absolutely not!!!", new String[]{});
+end
+
+rule "Other"
+	when
+		f: Fact(title == "Type" && answer == "Other")
+	then
+		String[] options = new String[]{"It's a ghost that's been haunting me",
+											"It's my friend's ex",
+											"It's my xbox/wii/playstation",
+											"It's my pet or other animal",
+											"It's my lovebot"};
+		String answer = input("Who is it?", options);
+		insert(new Fact("Crush", answer));
+end
+
+rule "Ghost"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's a ghost that's been haunting me")
+    then
+        String[] options = new String[]{"Yes, exactly like that!", "No, it's really nothing like that!"};
+        String answer = input("Like in that Demi Moore / Patrick Swayze movie?", options);
+        insert(new Fact("Like in that Demi Moore / Patrick Swayze movie?", answer));
+end
+
+rule "GhostYes"
+    when
+        f: Fact(title == "Like in that Demi Moore / Patrick Swayze movie?" && answer == "Yes, exactly like that!")
+    then
+        insert(new Fact("Conclusion", "FUCK THAT GHOST"));
+        String answer = input("FUCK THAT GHOST", new String[]{});
+end
+
+rule "GhostNo"
+    when
+        f: Fact(title == "Like in that Demi Moore / Patrick Swayze movie?" && answer == "No, it's really nothing like that!")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Would you have dated this person when among the living?", options);
+        insert(new Fact("Would you have dated this person when among the living?", answer));
+end
+
+rule "GhostNoYes"
+    when
+        f: Fact(title == "Would you have dated this person when among the living?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "FUCK THAT GHOST"));
+        String answer = input("FUCK THAT GHOST", new String[]{});
+end
+
+rule "GhostNoNo"
+    when
+        f: Fact(title == "Would you have dated this person when among the living?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Probably better not"));
+        String answer = input("Probably better not", new String[]{});
+end
+
+rule "FriendsEx"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my friend's ex")
+    then
+        String[] options = new String[]{"Well, technically, they haven't really...", "Oh, it's been a while"};
+        String answer = input("How long since they stopped dating?", options);
+        insert(new Fact("How long since they stopped dating?", answer));
+end
+
+rule "FriendsExNotReally"
+    when
+        f: Fact(title == "How long since they stopped dating?" && answer == "Well, technically, they haven't really...")
+    then
+        insert(new Fact("Conclusion", "Absolutely not!!!"));
+        String answer = input("Absolutely not!!!", new String[]{});
+end
+
+rule "FriendsExAwhile"
+    when
+        f: Fact(title == "How long since they stopped dating?" && answer == "Oh, it's been a while")
+    then
+        String[] options = new String[]{"They're friendly enough", "They have sworn to kill each other on sight"};
+        String answer = input("Are they still friends? Or enemies?", options);
+        insert(new Fact("Are they still friends? Or enemies?", answer));
+end
+
+rule "FriendsExAwhileKill"
+    when
+        f: Fact(title == "Are they still friends? Or enemies?" && answer == "They have sworn to kill each other on sight")
+    then
+        insert(new Fact("Conclusion", "Absolutely not!!!"));
+        String answer = input("Absolutely not!!!", new String[]{});
+end
+
+rule "FriendsExAwhileFriendly"
+    when
+        f: Fact(title == "Are they still friends? Or enemies?" && answer == "They're friendly enough")
+    then
+        insert(new Fact("Conclusion", "Clear it with your friend first. Bros before hoes, right? Or vice versa. as the case may be."));
+        String answer = input("Clear it with your friend first. Bros before hoes, right? Or vice versa. as the case may be.", new String[]{});
+end
+
+rule "Console"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my xbox/wii/playstation")
+    then
+        String[] options = new String[]{"I'm over 18", "I'm under 18"};
+        String answer = input("How old are you again?", options);
+        insert(new Fact("How old are you again?", answer));
+end
+
+rule "ConsoleOver"
+    when
+        f: Fact(title == "How old are you again?" && answer == "I'm over 18")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Do you want to be alone for the rest of your life?", options);
+        insert(new Fact("Do you want to be alone for the rest of your life?", answer));
+end
+
+rule "ConsoleOverYes"
+    when
+        f: Fact(title == "Do you want to be alone for the rest of your life?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "It's for the best right now. GAME ON!"));
+        String answer = input("It's for the best right now. GAME ON!", new String[]{});
+end
+
+rule "ConsoleOverNo"
+    when
+        f: Fact(title == "Do you want to be alone for the rest of your life?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Put down the controller and go take a shower. Your genitals will thank you."));
+        String answer = input("Put down the controller and go take a shower. Your genitals will thank you.", new String[]{});
+end
+
+rule "ConsoleUnder"
+    when
+        f: Fact(title == "How old are you again?" && answer == "I'm under 18")
+    then
+        insert(new Fact("Conclusion", "It's for the best right now. GAME ON!"));
+        String answer = input("It's for the best right now. GAME ON!", new String[]{});
+end
+
+rule "Pet"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my pet or other animal")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Seriously? Like, you want to date an animal?", options);
+        insert(new Fact("Seriously? Like, you want to date an animal?", answer));
+end
+
+rule "PetYes"
+    when
+        f: Fact(title == "Seriously? Like, you want to date an animal?" && answer == "Yes")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Are you a farmer?", options);
+        insert(new Fact("Are you a farmer?", answer));
+end
+
+rule "PetYesYes"
+    when
+        f: Fact(title == "Are you a farmer?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "I guess it's ok, but you should probably keep it on the downlow."));
+        String answer = input("I guess it's ok, but you should probably keep it on the downlow.", new String[]{});
+end
+
+rule "PetYesNo"
+    when
+        f: Fact(title == "Are you a farmer?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Absolutely not!!!"));
+        String answer = input("Absolutely not!!!", new String[]{});
+end
+
+rule "PetNo"
+    when
+        f: Fact(title == "Seriously? Like, you want to date an animal?" && answer == "No")
+    then
+        String[] options = new String[]{"..."};
+        String answer = input("Ok, well, not 'date' per se but...", options);
+        insert(new Fact("Ok, well, not 'date' per se but...", answer));
+end
+
+rule "PetNo..."
+    when
+        f: Fact(title == "Ok, well, not 'date' per se but...")
+    then
+        insert(new Fact("Conclusion", "Absolutely not!!!"));
+        String answer = input("Absolutely not!!!", new String[]{});
+end
+
+rule "LoveBot"
+    when
+        f: Fact(title == "Who is it?" && answer == "It's my lovebot")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Do you live in Japan?", options);
+        insert(new Fact("Do you live in Japan?", answer));
+end
+
+rule "LoveBotYes"
+    when
+        f: Fact(title == "Do you live in Japan?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "I guess it's ok, but you should probably keep it on the downlow."));
+        String answer = input("I guess it's ok, but you should probably keep it on the downlow.", new String[]{});
+end
+
+rule "LoveBotNo"
+    when
+        f: Fact(title == "Do you live in Japan?" && answer == "No")
+    then
+        String[] options = new String[]{"Yes", "No"};
+        String answer = input("Will you please move there to make the rest of us feel better?", options);
+        insert(new Fact("Will you please move there to make the rest of us feel better?", answer));
+end
+
+rule "LoveBotNoYes"
+    when
+        f: Fact(title == "Will you please move there to make the rest of us feel better?" && answer == "Yes")
+    then
+        insert(new Fact("Conclusion", "I guess it's ok, but you should probably keep it on the downlow."));
+        String answer = input("I guess it's ok, but you should probably keep it on the downlow.", new String[]{});
+end
+
+rule "LoveBotNoNo"
+    when
+        f: Fact(title == "Will you please move there to make the rest of us feel better?" && answer == "No")
+    then
+        insert(new Fact("Conclusion", "Absolutely not!!!"));
+        String answer = input("Absolutely not!!!", new String[]{});
+end
+
+rule "Personal"
+	when
+		f: Fact(title == "Type" && answer == "Personal")
+	then
+		String[] options = new String[]{"Yes", "No"};
+		String answer = input("Are you related?", options);
+		insert(new Fact("Are you related?", answer));
+end
+
+rule "PersonalRelated"
+	when
+		f: Fact(title == "Are you related?" && answer == "Yes")
+	then
+		String[] options = new String[]{"Yes", "No"};
+		String answer = input("By blood?", options);
+		insert(new Fact("By blood?", answer));
+end
+
+rule "PersonalUnrelated"
+	when
+		f: Fact(title == "Are you related?" && answer == "No")
+	then
+		String[] options = new String[]{"It's my high school crush", "It's my dungeon master", "It's my cellmate", "It's my soulmate", "It's my roommate", "It's my dealer", "It's my best friend's sibling", "It's my missed connection"};
+		String answer = input("Who is it?", options);
+		insert(new Fact("Who is it?", answer));
+end
+
+rule "HighSchoolCrush"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my high school crush")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "You've missed the point of this chart. And you disgust me."));
+		String answer = input("You've missed the point of this chart. And you disgust me.", options);
+end
+
+rule "DungeonMaster"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my dungeon master")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Yes, for the love of God, someone please have sex with the dungeon master!"));
+		String answer = input("Yes, for the love of God, someone please have sex with the dungeon master!", options);
+end
+
+rule "Cellmate"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my cellmate")
+	then
+		String[] options = new String[]{"Yes", "No"};
+		String answer = input("Do you really have a choice in the matter?", options);
+		insert(new Fact("Do you really have a choice in the matter?", answer));
+end
+
+rule "CellmateNo"
+	when
+		f: Fact(title == "Do you really have a choice in the matter?" && answer == "No")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Well, it's pretty obvious, but go ahead and give it a shot"));
+		String answer = input("Well, it's pretty obvious, but go ahead and give it a shot", options);
+end
+
+rule "CellmateYes"
+	when
+		f: Fact(title == "Do you really have a choice in the matter?" && answer == "Yes")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Probably better not."));
+		String answer = input("Probably better not.", options);
+end
+
+rule "Soulmate"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my soulmate")
+	then
+		String[] options = new String[]{"Yes", "No"};
+		String answer = input("Are you done having sex with other people?", options);
+		insert(new Fact("Are you done having sex with other people?", answer));
+end
+
+rule "SoulmateYes"
+	when
+		f: Fact(title == "Are you done having sex with other people?" && answer == "Yes")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Well, it's pretty obvious, but go ahead and give it a shot."));
+		String answer = input("Well, it's pretty obvious, but go ahead and give it a shot.", options);
+end
+
+rule "SoulmateNo"
+	when
+		f: Fact(title == "Are you done having sex with other people?" && answer == "No")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Probably better not."));
+		String answer = input("Probably better not.", options);
+end
+
+rule "Roommate"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my roommate")
+	then
+		String[] options = new String[]{"Yes", "No"};
+		String answer = input("Do you like drama?", options);
+		insert(new Fact("Do you like drama?", answer));
+end
+
+rule "RoommateYes"
+	when
+		f: Fact(title == "Do you like drama?" && answer == "Yes")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Awesome! Leaving the house and putting on clothes are two of the worst parts of dating, so this is actually one of the better decisions you'll ever make! Go for it!"));
+		String answer = input("Awesome! Leaving the house and putting on clothes are two of the worst parts of dating, so this is actually one of the better decisions you'll ever make! Go for it!", options);
+end
+
+rule "RoommateNo"
+	when
+		f: Fact(title == "Do you like drama?" && answer == "No")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Probably better not"));
+		String answer = input("Probably better not.", options);
+end
+
+rule "Dealer"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my dealer")
+	then
+		String[] options = new String[]{"Yes", "No"};
+		String answer = input("Do you wanna get high?", options);
+		insert(new Fact("Do you wanna get high?", answer));
+end
+
+rule "DealerYes"
+	when
+		f: Fact(title == "Do you wanna get high?" && answer == "Yes")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "SEX THEM!!!"));
+		String answer = input("SEX THEM!!!", options);
+end
+
+rule "DealerNo"
+	when
+		f: Fact(title == "Do you wanna get high?" && answer == "No")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Probably better not."));
+		String answer = input("Probably better not.", options);
+end
+
+rule "BestFriendsSibling"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my best friend's sibling")
+	then
+		String[] options = new String[]{"I don't think so", "A little"};
+		String answer = input("Are you crazy?", options);
+		insert(new Fact("Are you crazy?", answer));
+end
+
+rule "BestFriendsSiblingSane"
+	when
+		f: Fact(title == "Are you crazy?" && answer == "I don't think so")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "You're a bad liar"));
+		String answer = input("You're a bad liar.", options);
+end
+
+rule "BestFriendsSiblingCrazy"
+	when
+		f: Fact(title == "Are you crazy?" && answer == "A little")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "SEX THEM!!!"));
+		String answer = input("SEX THEM!!!", options);
+end
+
+rule "MissedConnection"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my missed connection")
+	then
+		String[] options = new String[]{"A little", "Not at all"};
+		String answer = input("How lonely are you?", options);
+		insert(new Fact("How lonely are you?", answer));
+end
+
+rule "MissedConnectionLonely"
+	when
+		f: Fact(title == "How lonely are you?" && answer == "A little")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "SEX THEM!!!"));
+		String answer = input("SEX THEM!!!", options);
+end
+
+rule "MissedConnectionNotLonely"
+	when
+		f: Fact(title == "How lonely are you?" && answer == "Not at all")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "You're a bad liar."));
+		String answer = input("You're a bad liar.", options);
+end
+
+rule "RelatedByBlood"
+	when
+		f: Fact(title == "By blood?" && answer == "Yes")
+	then
+		String[] options = new String[]{"It's my brother/sister", "It's my first cousin", "It's my aunt/uncle", "It's my parent", "It's my grandparent", "It's my child", "It's my second cousin, half-cousin or more distant"};
+		String answer = input("Who is it?", options);
+		insert(new Fact("Who is it?", answer));
+end
+
+rule "Sibling"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my brother/sister")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "ABSOLUTELY NOT!!!"));
+		String answer = input("ABSOLUTELY NOT!!!", options);
+end
+
+rule "FirstCousin"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my first cousin")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "ABSOLUTELY NOT!!!"));
+		String answer = input("ABSOLUTELY NOT!!!", options);
+end
+
+rule "AuntOrUncle"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my aunt/uncle")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "ABSOLUTELY NOT!!!"));
+		String answer = input("ABSOLUTELY NOT!!!", options);
+end
+
+rule "Parent"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my parent")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "ABSOLUTELY NOT!!!"));
+		String answer = input("ABSOLUTELY NOT!!!", options);
+end
+
+rule "Grandparent"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my grandparent")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "ABSOLUTELY NOT!!!"));
+		String answer = input("ABSOLUTELY NOT!!!", options);
+end
+
+rule "Child"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my child")
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "ABSOLUTELY NOT!!!"));
+		String answer = input("ABSOLUTELY NOT!!!", options);
+end
+
+rule "DistantBlood"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my second cousin, half-cousin or more distant")
+	then
+		String[] options = new String[]{"God, I am so desperate", "No, it's really love, I'm sure"};
+		String answer = input("Are you really in love or just desperate?", options);
+		insert(new Fact("Are you really in love or just desperate?", answer));
+end
+
+rule "DistantBloodDesperate"
+	when
+		f: Fact(title == "Are you really in love or just desperate?" && answer == "God, I am so desperate");
+	then
+		String[] options = new String[]{};
+		insert(new Fact("Conclusion", "Hang in there, pal. You'll meet someone else."));
+		String answer = input("Hang in there, pal. You'll meet someone else.", options);
+end
+
+rule "DistantBloodLove"
+	when
+		f: Fact(title == "Are you really in love or just desperate?" && answer == "No, it's really love, I'm sure");
+	then
+		String[] options = new String[]{"Yes", "No"};
+		String answer = input("Do you live in a sparsely populated area? Or the South?", options);
+		insert(new Fact("Do you live in a sparsely populated area? Or the South?", answer));
+end
+
+rule "DistandBloodLoveNo"
+	when
+		f: Fact(title == "Do you live in a sparsely populated area? Or the South?" && answer == "No")
+	then
+		String options[] = new String[]{};
+		insert(new Fact("Conclusion", "Hang in there, pal. You'll meet someone else."));
+		String answer = input("Hang in there, pal. You'll meet someone else.", options);
+end
+
+rule "DistantBloodLoveYes"
+	when
+		f: Fact(title == "Do you live in a sparsely populated area? Or the South?" && answer == "Yes")
+	then
+		String options[] = new String[]{};
+		insert(new Fact("Conclusion", "I guess it's OK. But you should probably keep it on the downlow."));
+		String answer = input("I guess it's OK. But you should probably keep it on the downlow.", options);
+end
+
+rule "RelatedNotByBlood"
+	when
+		f: Fact(title == "By blood?" && answer == "No")
+	then
+		String options[] = new String[]{"It's my brother's wife's cousin, if you can believe it", "It's my step/adopted sibling/child"};
+		String answer = input("Who is it?", options);
+		insert(new Fact("Who is it?", answer));
+end
+
+rule "BrothersWifesCousin"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my brother's wife's cousin, if you can believe it");
+	then
+		String options[] = new String[]{};
+		insert(new Fact("Conclusion", "Make it happen, captain."));
+		String answer = input("Make it happen, captain.", options);
+end
+
+rule "StepSis"
+	when
+		f: Fact(title == "Who is it?" && answer == "It's my step/adopted sibling/child");
+	then
+		String options[] = new String[]{"Yes", "No"};
+		String answer = input("Are the parents still married?", options);
+		insert(new Fact("Are the parents still married?", answer));
+end
+
+rule "StepSisMarriedParents"
+	when
+		f: Fact(title == "Are the parents still married?" && answer == "Yes")
+	then
+		String options[] = new String[]{"Yes", "No"};
+		String answer = input("Are you Woody Allen?", options);
+		insert(new Fact("Are you Woody Allen?", answer));
+end
+
+rule "StepSisMarriedParentsWoodyAllen"
+	when
+		f: Fact(title == "Are you Woody Allen?" && answer == "Yes")
+	then
+		String options[] = new String[]{};
+		insert(new Fact("Conclusion", "Make it happen, captain."));
+		String answer = input("Make it happen, captain.", options);
+end
+
+rule "StepSisMarriedParentsNotWoody"
+	when
+		f: Fact(title == "Are you Woody Allen?" && answer == "No")
+	then
+		String options[] = new String[]{};
+		insert(new Fact("Conclusion", "ABSOLUTELY NOT!!!"));
+		String answer = input("ABSOLUTELY NOT!!!", options);
+end
+
+rule "StepSisDivorcedParents"
+	when
+		f: Fact(title == "Are the parents still married?" && answer == "No")
+	then
+		String options[] = new String[]{"Yes", "No"};
+		String answer = input("Did you grow up together, like from childhood?", options);
+		insert(new Fact("Did you grow up together, like from childhood?", answer));
+end
+
+rule "StepSisDivorcedYes"
+	when
+		f: Fact(title == "Did you grow up together, like from childhood?" && answer == "Yes")
+	then
+		String options[] = new String[]{};
+		insert(new Fact("Conclusion", "ABSOLUTELY NOT!!!"));
+		String answer = input("ABSOLUTELY NOT!!!", options);
+end
+
+rule "StepSisDivorcedNo"
+	when
+		f: Fact(title == "Did you grow up together, like from childhood?" && answer == "No")
+	then
+		String options[] = new String[]{};
+		insert(new Fact("Conclusion", "I guess it's OK, but you should probably keep it on the downlow."));
+		String answer = input("I guess it's OK, but you should probably keep it on the downlow.", options);
+end
